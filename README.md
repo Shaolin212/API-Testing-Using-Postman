@@ -1,2 +1,2 @@
 # API-Testing-with-Postman
-API testing by writing test cases with Postman and generated a report with Newman.
+API testing by writing test cases with Postman and report generate with Newman.
