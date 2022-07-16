@@ -1,0 +1,457 @@
+{
+	"info": {
+		"_postman_id": "18ad4415-2569-4eee-95b3-5f8a008001e7",
+		"name": "project_1_2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21850162"
+	},
+	"item": [
+		{
+			"name": "Get_Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check status code with valid data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check status code with invalid data\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check status code with double quotes\", function () {\r",
+							"    pm.response.to.have.status(\"200\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Base_Url}}/api/studentsDetails",
+					"host": [
+						"{{Base_Url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"ID\", jsonData.id)\r",
+							"\r",
+							"pm.test(\"Check status code with valid data\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Check status code with invalid data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the first name field with valid data\", function () {\r",
+							"    pm.expect(jsonData.first_name).to.eql(\"sample string 2\");\r",
+							"});\r",
+							"pm.test(\"Check the first name field with incorrect data\", function () {\r",
+							"    pm.expect(jsonData.first_name).to.eql(\"sample\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the middle name field with valid data\", function () {\r",
+							"    pm.expect(jsonData.middle_name).to.eql(\"sample string 3\");\r",
+							"});\r",
+							"pm.test(\"Check the middle name field without double quotes\", function () {\r",
+							"    pm.expect(jsonData.middle_name).to.eql(sample3);\r",
+							"});\r",
+							"pm.test(\"Check the middle name field with numbers\", function () {\r",
+							"    pm.expect(jsonData.middle_name).to.eql(123);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the last name field with valid data\", function () {\r",
+							"    pm.expect(jsonData.last_name).to.eql(\"sample string 4\");\r",
+							"});\r",
+							"pm.test(\"Check the last name field without double quotes\", function () {\r",
+							"    pm.expect(jsonData.last_name).to.eql(sample4);\r",
+							"});\r",
+							"pm.test(\"Check the last name field with numbers\", function () {\r",
+							"    pm.expect(jsonData.last_name).to.eql(1234);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the date of birth field with valid data\", function () {\r",
+							"    pm.expect(jsonData.date_of_birth).to.eql(\"sample string 5\");\r",
+							"});\r",
+							"pm.test(\"Check the date of birth field without double quotes\", function () {\r",
+							"    pm.expect(jsonData.date_of_birth).to.eql(12/23/1992);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"first_name\": \"sample string 2\",\r\n \"middle_name\": \"sample string 3\",\r\n \"last_name\": \"sample string 4\",\r\n \"date_of_birth\": \"sample string 5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_Url}}/api/studentsDetails",
+					"host": [
+						"{{Base_Url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update_Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Check status code with valid data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Check status code with invalid data\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the status field value with valid data\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(\"true\");\r",
+							"});\r",
+							"pm.test(\"Check the status field value with invalid data\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(\"True\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the message field value with valid data\", function () {\r",
+							"    pm.expect(jsonData.msg).to.eql(\"update  data success\");\r",
+							"});\r",
+							"pm.test(\"Check the message field value with a missing blank space\", function () {\r",
+							"    pm.expect(jsonData.msg).to.eql(\"update data success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":{{ID}},\r\n    \"first_name\": \"sample \",\r\n    \"middle_name\": \"sample \",\r\n    \"last_name\": \"sample \",\r\n    \"date_of_birth\": \"sample \"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_Url}}/api/studentsDetails/{{ID}}",
+					"host": [
+						"{{Base_Url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_Specific_Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var checkID = pm.variables.get(\"ID\");\r",
+							"\r",
+							"pm.test(\"Check status code with valid data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Check status code with invalid data\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the id field with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.id).to.eql(checkID);\r",
+							"});\r",
+							"pm.test(\"Check the id field with valid data manually\", function () {\r",
+							"    pm.expect(jsonData.data.id).to.eql(2678701);\r",
+							"});\r",
+							"pm.test(\"Check the id field with invalid data\", function () {\r",
+							"    pm.expect(jsonData.data.id).to.eql(2678691);\r",
+							"});\r",
+							"pm.test(\"Check the id field with a deleted id\", function () {\r",
+							"    pm.expect(jsonData.data.id).to.eql(2676868);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the first name field with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.first_name).to.eql(\"sample \");\r",
+							"});\r",
+							"pm.test(\"Check the first name field with a missing blank space\", function () {\r",
+							"    pm.expect(jsonData.data.first_name).to.eql(\"sample\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the middle name field with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.middle_name).to.eql(\"sample \");\r",
+							"});\r",
+							"pm.test(\"Check the middle name field with a missing blank space\", function () {\r",
+							"    pm.expect(jsonData.data.middle_name).to.eql(\"sample\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the last name field with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.last_name).to.eql(\"sample \");\r",
+							"});\r",
+							"pm.test(\"Check the last name field with a missing blank space\", function () {\r",
+							"    pm.expect(jsonData.data.last_name).to.eql(\"sample\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the date of birth field with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.date_of_birth).to.eql(\"sample \");\r",
+							"});\r",
+							"pm.test(\"Check the date of birth field without double quotes\", function () {\r",
+							"    pm.expect(jsonData.data.date_of_birth).to.eql(sample);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Base_Url}}/api/studentsDetails/{{ID}}",
+					"host": [
+						"{{Base_Url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_Student_Address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Check status code with valid data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Check status code with invalid data\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the status field value with valid data\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(\"true\");\r",
+							"});\r",
+							"pm.test(\"Check the status field value with invalid data\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(\"True\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the message field value with valid data\", function () {\r",
+							"    pm.expect(jsonData.msg).to.eql(\"Add  data success\");\r",
+							"});\r",
+							"pm.test(\"Check the message field value with a missing blank space\", function () {\r",
+							"    pm.expect(jsonData.msg).to.eql(\"Add data success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Permanent_Address\": {\r\n    \"House_Number\": \"sample string 1\",\r\n    \"City\": \"sample string 2\",\r\n    \"State\": \"sample string 3\",\r\n    \"Country\": \"sample string 4\",\r\n    \"PhoneNumber\": [\r\n    {\r\n        \"Std_Code\": \"sample string 1\",\r\n        \"Home\": \"sample string 2\",\r\n        \"Mobile\": \"sample string 3\"\r\n    },\r\n    {\r\n        \"Std_Code\": \"sample string 1\",\r\n        \"Home\": \"sample string 2\",\r\n        \"Mobile\": \"sample string 3\"\r\n    }\r\n    ]\r\n    },\r\n    \"stId\": {{ID}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_Url}}/api/addresses",
+					"host": [
+						"{{Base_Url}}"
+					],
+					"path": [
+						"api",
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FINAL_STUDENT_DETAILS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Check status code with valid data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Check status code with invalid data\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Check status code with double quotes\", function () {\r",
+							"    pm.response.to.have.status(\"200\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the House number field with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.House_Number).to.eql(\"sample string 1\");\r",
+							"});\r",
+							"pm.test(\"Check the House number field with invalid data\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.House_Number).to.eql(\"sample string1\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the City field with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.City).to.eql(\"sample string 2\");\r",
+							"});\r",
+							"pm.test(\"Check the City field with an extra blank space\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.City).to.eql(\"sample string 2 \");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the Country field with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.Country).to.eql(\"sample string 4\");\r",
+							"});\r",
+							"pm.test(\"Check the Country field with invalid data\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.Country).to.eql(\"sample string 3\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the Mobile field of first array with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.PhoneNumber[0].Mobile).to.eql(\"sample string 3\");\r",
+							"});\r",
+							"pm.test(\"Check the Mobile field of first array with an extra blank space\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.PhoneNumber[0].Mobile).to.eql(\"sample string 3 \");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the Mobile field of second array with valid data\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.PhoneNumber[1].Mobile).to.eql(\"sample string 3\");\r",
+							"});\r",
+							"pm.test(\"Check the Mobile field of second array with an extra blank space\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.PhoneNumber[1].Mobile).to.eql(\"sample  string 3\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Base_Url}}/api/FinalStudentDetails/{{ID}}",
+					"host": [
+						"{{Base_Url}}"
+					],
+					"path": [
+						"api",
+						"FinalStudentDetails",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Check status code with valid data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Check status code with double quotes\", function () {\r",
+							"    pm.response.to.have.status(\"200\");\r",
+							"});\r",
+							"pm.test(\"Check status code with invalid data\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the status field value with valid data\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(\"true\");\r",
+							"});\r",
+							"pm.test(\"Check the status field value with invalid data\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(\"True\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the message field value with valid data\", function () {\r",
+							"    pm.expect(jsonData.msg).to.eql(\"Delete  data success\");\r",
+							"});\r",
+							"pm.test(\"Check the message field value with a missing blank space\", function () {\r",
+							"    pm.expect(jsonData.msg).to.eql(\"Delete data success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{Base_Url}}/api/studentsDetails/{{ID}}",
+					"host": [
+						"{{Base_Url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
